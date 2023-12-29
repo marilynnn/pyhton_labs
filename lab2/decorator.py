@@ -8,13 +8,13 @@ class Decorator:
 
     def history_update(self, func_name, call_time, *args):
         tm = time.strftime("%H:%M:%S", call_time)
-        self.history.append(f"<{tm}> : function {func_name} called with arguments{ [arg for arg in args]}")
+        self.history.append(f"<{tm}> : function {func_name} called with arguments{[arg for arg in args]}")
 
 
-class DecoratorFirst(Decorator):
+class PerfomanceDecorator(Decorator):
 
     def print_time(self, tm):
-        print(format(self.time, '.9f'))
+        print("\t", format(self.time, '.9f'))
 
     @property
     def __name__(self):
@@ -29,19 +29,17 @@ class DecoratorFirst(Decorator):
         self.history_update(self.func.__name__, time.localtime(), *args, **kwargs)
         return res
 
-class DecoratorSecond(Decorator):
-
-    def print_time(self):
-        print(f"<html><body>{self.func.time:.10f}</body></html>")
+class HTMLDecorator(Decorator):
 
     def __call__(self, *args, **kwargs):
+        print("<html>\n\t<body>")
         res = self.func(*args, **kwargs)
+        print("\t</body>\n</html>")
         self.history_update(self.func.__name__, time.localtime(), *args, **kwargs)
-        self.print_time()
 
 
-@DecoratorSecond
-@DecoratorFirst
+@HTMLDecorator
+@PerfomanceDecorator
 def quad_1(nums):
     quads = []
 
@@ -49,14 +47,14 @@ def quad_1(nums):
         quads.append(num*num)
     return quads
 
-@DecoratorSecond
-@DecoratorFirst
+@HTMLDecorator
+@PerfomanceDecorator
 def quad_2(nums):
    quads = [num*num for num in nums]
    return quads
 
-@DecoratorSecond
-@DecoratorFirst
+@HTMLDecorator
+@PerfomanceDecorator
 def quad_3(nums):
     return map(lambda x: x*x, nums)
 

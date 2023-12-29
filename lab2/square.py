@@ -1,10 +1,13 @@
+from abc import ABC, abstractmethod
 import math
 
 
-class Figure:
+class Figure(ABC):
+    @abstractmethod
     def __init__(self):
         pass
 
+    @abstractmethod
     def square(self):
         pass
 
@@ -61,6 +64,11 @@ a = Triangle(3, 4, 5)
 print(a.square())
 
 b = Circle(3)
+print(b.square())
+
+c = Rectangle(2, 4)
+print(c.square())
+
 print(b.square())
 
 c = Rectangle(2, 4)
