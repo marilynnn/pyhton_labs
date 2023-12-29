@@ -11,27 +11,37 @@ class Vector:
     def __add__(self, other):
         return Vector(self.x + other.x, self.y + other.y)
 
+    def __rmul__(self, other):
+        if not isinstance(other, (int, float)):
+            raise ValueError('Can multiply only on number')
+        return Vector(self.x * other, self.y * other)
+
+    def __mul__(self, other):
+        if not isinstance(other, (int, float)):
+            raise ValueError('Can multiply only on number')
+        return Vector(self.x * other, self.y * other)
+
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y
 
-    def mul_on_num (self, num):
-        if not isinstance(num, (int, float)):
-            raise ValueError('Can multiply only on number')
-        return Vector(self.x * num, self.y*num)
+    def __ne__(self, other):
+        return self.x != other.x or self.y != other.y
 
     def scalar_mul (self, other):
         return self.x * other.x + self.y * other.y
 
-    def get_len (self):
+    def __abs__(self):
         return (self.x**2 + self.y**2)**0.5
-
-    def __str__(self):
-        return '<{}, {}>'.format(self.x, self.y)
 
     def __repr__(self):
         return '<{}, {}>'.format(self.x, self.y)
 
+    def __str__(self):
+        return self.__repr__()
 
+vec = Vector(1,2)
+print(2*vec)
+print(abs(vec))
 
 
 
